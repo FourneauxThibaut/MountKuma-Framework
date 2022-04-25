@@ -48,7 +48,7 @@ public function middleware(object $route){
 //      ┌────────────┐
 //      │  REDIRECT  │
 //      └────────────┘
-    public function redirect($controller){
+    public function redirect($controller, $id = null){
 
         $file = $controller[0];
         $method = $controller[1];
@@ -57,7 +57,14 @@ public function middleware(object $route){
         require ($_SERVER['DOCUMENT_ROOT'].'/app/Controller/'.$this->folder.'/'.$file.'.php');
         require ($_SERVER['DOCUMENT_ROOT'].'/app/Model/'.$this->folder.'/'.$model.'.php');
         
-        $controller = new $file();
-        $controller->$method();
+        $name = $file.'::'.$method;
+        $name = new $file();
+
+        if ( $id != null ){
+            $name->$method($id);
+        }
+        else{
+            $name->$method();
+        }
     }
 }

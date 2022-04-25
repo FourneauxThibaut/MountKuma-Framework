@@ -1,18 +1,12 @@
 <?php
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-
 class Controller
 {
-
-    private $loader;
-    protected $twig;
 
 //      ┌────────┐
 //      │  VIEW  │
 //      └────────┘
-    public function view($path, $data = [])
+    public function view($path, $head, $data = [])
     {
         $path = explode(".", $path);
         
@@ -25,16 +19,13 @@ class Controller
             $path = join("/",$path);
         }
 
-        $path = "{$path}.html";
+        $title = $head['title'];
 
-        $this->loader = new FilesystemLoader($_SERVER['DOCUMENT_ROOT'] . '/app/View');
-        $this->twig = new Environment($this->loader);
+        ob_start();
 
-        if (! $data) {
-            return $this->twig->display($path);
-        }
-        else {
-            return $this->twig->display($path, $data);
-        }
+        require($_SERVER['DOCUMENT_ROOT'] . '/app/View/' . $path . '.php');
+        $content = ob_get_clean();
+        
+        require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Layout/public_layout.php');
     }
 }

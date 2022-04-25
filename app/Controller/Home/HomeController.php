@@ -19,9 +19,10 @@ class HomeController extends Controller
 //      └─────────┘
     public function index()
     {
-        $google_font = $this->model->get_google_api();
-        $data = [ 'google_font' => $google_font['items'] ];
+        // $google_font = $this->model->get_google_api();
+        $data = [];
+        $head = [ 'title' => 'Mount-Kuma Framework' ];
 
-        return $this->view('home.index', $data);
+        return $this->view('home.index', $head, $data);
     }
 }

@@ -10,6 +10,7 @@ class Router
     private $url;
     private $url_argument;
     private $url_id;
+    private $redirected = false;
 
 //      ┌─────────────┐
 //      │  CONSTRUCT  │
@@ -146,45 +147,61 @@ class Router
 //      └────────┘
     public function load()
     {
-        $redirected = false;
-        $url = $this->url;
+        if ( $this->redirected != true ){
 
-        if( gettype($url) == 'array' ){
-            $url = join("/",$url);
-        }
+            if ( gettype($this->url) == 'array' ){
+                $this->url = join("/", $this->url);
+            }
 
-        if ( strlen($url) > 1 ){
-            $url = "/" . $url;
-        }
+            if ( strlen($this->url) > 1 ){
+                $this->url = "/" . $this->url;
+            }
 
-        $this->url = $url;
+            if (preg_match('~[0-9]+~', $this->url)) {
+                $this->url_id = preg_replace('/[^0-9]/', '', $this->url);
 
-        foreach ($this->routes as $route_controller) {
-            foreach ($route_controller as $route) {
-                $path = $route->path;
+                $this->url = str_replace($this->url_id, "", $this->url);
 
-                // r( $this->url == $path );
-                // r($this->url);
-                // r($path);
+                if ( stripos($this->url,"//") ){
+                    $this->url = str_replace("//", "/", $this->url);
+                }
+            }
 
-                if( $this->url == $path ){
-                    
-                    $access = $route->middleware($route);
-                    
-                    if ($access == true){
-                        $route->redirect($route->callable);
-                        $redirected = true;
+            foreach ($this->routes as $route_controller) {
+                foreach ($route_controller as $route) {
+
+                    // if the route has an id
+                    if ( stripos($route->path,"{id}") ){
+                        $id = substr($route->path, stripos($route->path,"{id}"), 4);
+                        $route->id = $id;
+
+                        $route->path = str_replace("{id}", "", $route->path);
+                        
+                        if ( stripos($route->path,"//") ){
+                            $route->path = str_replace("//", "/", $route->path);
+                        }
+
+                        $route->id = $this->url_id;
                     }
-                    else{
-                        require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Error/404.php');
-                        // require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Home/index.php');
-                        $redirected = true;
+
+                    if ( $route->path == $this->url ){
+                        
+                        $access = $route->middleware($route);
+                        
+                        if ( $access == true ){
+                            
+                            $route->redirect($route->callable, $route->id);
+                            $this->redirected = true;
+                        }
+                        else{
+                            require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Error/404.php');
+                            $this->redirected = true;
+                        }
                     }
                 }
             }
         }
-
-        if( !$redirected ){
+        if ( $this->redirected != true ){
             require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Error/404.php');
         }
     }
