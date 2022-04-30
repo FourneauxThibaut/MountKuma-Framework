@@ -1,4 +1,22 @@
+@font-face {
+    font-family: "Rubik";
+    src: url(../fonts/Rubik.ttf) format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Rubik";
+    src: url(../fonts/Rubik-Italic.ttf) format("truetype");
+    font-weight: normal;
+    font-style: italic;
+}
+
 ::selection {
     color: white;
     background-color: #ee6414;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Rubik;
+    font-weight: lighter;
 }

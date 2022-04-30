@@ -1,15 +1,123 @@
 <?php
 
+use Database\Database;
+use GuzzleHttp\Exception\ClientException;
+
 class Model
 {
     public $db;
+    public $controller;
+    public $limit = 0;
 
 //      ┌─────────────┐
 //      │  CONSTRUCT  │
 //      └─────────────┘
-    public function __construct()
+    public function __construct($controller)
     {
-        require($_SERVER['DOCUMENT_ROOT'] . '/app/DB/connect.php');
-        $this->db = new database\Database();
+        $this->controller = $controller;
+
+        require($_SERVER['DOCUMENT_ROOT'] . '/app/Database/Database.php');
+        $this->db = Database::connect();
+    }
+
+//      ┌───────┐
+//      │  GET  │
+//      └───────┘
+    public function get($select, $from, $where = null, $value = null)
+    {
+        if ( $where != null ){
+            if ( $this->limit != 0 ){
+                $request = $this->db->select(
+                    'SELECT '.$select.' FROM '.$from.' WHERE '.$where.' = ? LIMIT '.$this->limit, [$value]
+                );
+
+                $this->limit = 0;
+                return $request;
+            }
+            else{
+                $request = $this->db->select(
+                    'SELECT '.$select.' FROM '.$from.' WHERE '.$where.' = ?', [$value]
+                );
+
+                return $request;
+            }
+        }
+        else{
+            if ( $this->limit != 0 ){
+                $request = $this->db->select(
+                    'SELECT '.$select.' FROM '.$from.' LIMIT '.$this->limit
+                );
+                
+                $this->limit = 0;
+                return $request;
+            }
+            else{
+                $request = $this->db->select(
+                    'SELECT '.$select.' FROM '.$from
+                );
+                
+                return $request;
+            }
+        }
+    }
+
+//      ┌─────────┐
+//      │  STORE  │
+//      └─────────┘
+    public function store($where, $data)
+    {
+        $max_id = $this->get( 'MAX(id)', $where );
+        $data['id'] = $max_id['MAX(id)'] + 1;
+
+        try {
+            $this->db->insert(
+                $where, 
+                $data
+            );
+        } catch (Exception $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            die();
+        }
+    }
+
+//      ┌──────────┐
+//      │  UPDATE  │
+//      └──────────┘
+    public function update($select, $data, $where)
+    {
+        $this->db->update(
+            $select,
+            $data,
+            $where
+        );
+    }
+
+//      ┌──────────┐
+//      │  DELETE  │
+//      └──────────┘
+    public function delete($select, $where)
+    {
+        $this->db->delete(
+            $select,
+            $where
+        );
+    }
+
+//      ┌───────────┐
+//      │  GET API  │
+//      └───────────┘
+    public function get_api($url, $key = null)
+    {
+        $client = new GuzzleHttp\Client();
+
+        try {
+            $request = $client->request('GET', $url.$key);
+        } catch (ClientException $e) {
+            echo 'Erreur : ' . $e->getMessage();
+            die();
+        }
+
+        header('Content-Type: application/json; charset=utf-8');
+        return json_decode($request->getBody(), true);
     }
 }

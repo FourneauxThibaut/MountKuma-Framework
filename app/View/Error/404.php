@@ -1,4 +1,7 @@
-<?php ob_start(); ?>
+<?php 
+    $title = 'Not Found';
+    ob_start(); 
+?>
 
     <h1>Not Found</h1>
 

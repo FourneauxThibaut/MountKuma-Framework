@@ -167,7 +167,10 @@ class Router
                 }
             }
 
+            $i = 0;
+        
             foreach ($this->routes as $route_controller) {
+
                 foreach ($route_controller as $route) {
 
                     // if the route has an id
@@ -192,13 +195,17 @@ class Router
                             
                             $route->redirect($route->callable, $route->id);
                             $this->redirected = true;
+                            break;
                         }
                         else{
                             require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Error/404.php');
                             $this->redirected = true;
+                            break;
                         }
                     }
                 }
+                
+                $i++;
             }
         }
         if ( $this->redirected != true ){

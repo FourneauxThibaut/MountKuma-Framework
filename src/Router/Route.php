@@ -9,6 +9,7 @@ class Route {
     public $callable;
     public $folder;
     public $middleware;
+    public $id;
 
 //      ┌─────────────┐
 //      │  CONSTRUCT  │
