@@ -13,21 +13,36 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
     tailwind.config = {
-      theme: {
-        extend: {
-            colors: {
-                sunlight: '#f57c36',
-                sunshine: '#ee6414',
-                sunbreak: '#c7500c',
+        theme: {
+            extend: {
+                colors: {
+                    sunlight: '#f57c36',
+                    sunshine: '#ee6414',
+                    sunbreak: '#c7500c',
+                }
             }
         }
-      }
     }
     </script>
     <link rel="stylesheet" href="../../../assets/css/style.css">
     <title><?= $title ?></title>
 </head>
 <body>
+    <header>
+        <ul>
+            <?php if (! empty($_SESSION['auth']) ) { ?>
+
+                <li><a href="/user/<?= $_SESSION['auth']['id'] ?> ">Profile</a></li>
+                <li><a href="/disconnect">Disconnect</a></li>
+
+            <?php } else { ?>
+
+                <li><a href="login">Login</a></li>
+                <li><a href="sign-up">Sign up</a></li>
+
+            <?php } ?>
+        </ul>
+    </header>
     <main>
         <?= $content ?>
     </main>

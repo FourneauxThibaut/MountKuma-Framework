@@ -33,11 +33,28 @@ public function middleware(object $route){
 
     switch ($route->middleware) {
         case 'admin':
+            if (! empty($_SESSION['auth'])){
+                if ($_SESSION['auth']['access'] == 'admin'){
+                    return true;
+                }
+            }
             return false;     
             break;
 
         case 'auth':
+            if (! empty($_SESSION['auth'])){
+                if ($_SESSION['auth']['id'] == $route->id){
+                    return true;
+                }
+                if ($_SESSION['auth']['access'] == 'admin'){
+                    return true;
+                }
+            }
             return false;     
+            break;
+
+        case 'blocked':
+            return false;
             break;
         
         default:

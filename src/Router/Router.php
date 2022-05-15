@@ -126,6 +126,14 @@ class Router
 //      ┌──────────────────┐
 //      │  ADD MIDDLEWARE  │
 //      └──────────────────┘
+/**
+ * It loops through the routes, then loops through the methods, then loops through the arguments,
+ * then sets the middleware
+ * 
+ * @param string controller The controller name
+ * @param array args array of methods to add middleware to
+ * @param string access the middleware name
+ */
     public function add_middleware(string $controller,array $args,string $access)
     {
 
@@ -145,6 +153,11 @@ class Router
 //      ┌────────┐
 //      │  LOAD  │
 //      └────────┘
+/**
+ * It loads the routes and checks if the url matches the route. If it does, it checks if the user
+ * has access to the route. If the user has access, it redirects the user to the route. If the user
+ * doesn't have access, it redirects the user to the 404 page
+ */
     public function load()
     {
         if ( $this->redirected != true ){
@@ -175,6 +188,7 @@ class Router
 
                     // if the route has an id
                     if ( stripos($route->path,"{id}") ){
+
                         $id = substr($route->path, stripos($route->path,"{id}"), 4);
                         $route->id = $id;
 
@@ -185,20 +199,32 @@ class Router
                         }
 
                         $route->id = $this->url_id;
+
+                        if ( substr($this->url, -1) == '/' ){	
+                            $this->url = substr($this->url, 0, -1);
+
+                            if ($this->url == ''){
+                                $this->url = '/';
+                            }
+                        }
+                        if ( substr($route->path, -1) == '/' ){	
+                            $route->path = substr($route->path, 0, -1);
+                        }
                     }
 
                     if ( $route->path == $this->url ){
-                        
+
                         $access = $route->middleware($route);
                         
                         if ( $access == true ){
                             
                             $route->redirect($route->callable, $route->id);
+
                             $this->redirected = true;
                             break;
                         }
                         else{
-                            require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Error/404.php');
+                            require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Error/not_access.php');
                             $this->redirected = true;
                             break;
                         }

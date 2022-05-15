@@ -66,8 +66,17 @@ class Model
 //      └─────────┘
     public function store($where, $data)
     {
-        $max_id = $this->get( 'MAX(id)', $where );
-        $data['id'] = $max_id['MAX(id)'] + 1;
+        if( ! empty($this->get( 'MAX(id)', $where )) ) {
+
+            $max_id_temp = $this->get( 'MAX(id)', $where );
+            $max_id = $max_id_temp[0]['MAX(id)'];
+        }
+        else {
+
+            $max_id = 0;
+        }
+        
+        $data['id'] = $max_id + 1;
 
         try {
             $this->db->insert(

@@ -15,31 +15,52 @@ Class Migration
         $this->db = Database::connect();
     }
 
-    public function add(array $data)
+    public function add($name, $data)
 	{
-        $sql = "INSERT INTO `{$data['table']}` (`" . implode('`, `', array_keys($data['data'])) . "`) VALUES ('" . implode("', '", $data['data']) . "')";
-        $this->db->query($sql);
+        if ( $this->exist($name) == false ) {
+
+            die('Table ' . $name . ' already exist');
+        }
+        else {
+            
+            $table['name'] = $name;
+
+            try {
+                $this->db->insert(
+                    'tables', 
+                    $table
+                );
+            } catch (Exception $e) {
+
+                die('Erreur : ' . $e->getMessage());
+            }
+
+            $migration = 'id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                ';
+
+            foreach ($data as $key => $value) {
+                $migration .= $key . ' ' . $value . ',
+                ';
+            }
+
+            $sql = 'CREATE TABLE '.$name.'(
+                '.$migration.'
+            )';
+
+        }
 	}
 
-    public function exist($table)
+    public function exist($name)
     {
-        $request = '';
-
         $request = $this->db->select(
-            'SELECT id FROM '.$table.' LIMIT 1'
+            'SELECT * FROM tables WHERE name = ?', [$name]
         );
 
-
-        if ( $request ){
+        if (! $request ){
             return true;
         }
         else{
             return false;
         }
-
-
-        $request = $request ? true : false;
-
-        return $request;
     }
 }

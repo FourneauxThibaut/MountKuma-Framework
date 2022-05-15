@@ -20,9 +20,7 @@ class HomeController extends Controller
 //      └─────────┘
     public function index()
     {
-        $data = [
-            'countries' => $this->model->get('*', 'country')
-        ];
+        $data = [];
         $head = [ 'title' => 'Mount-Kuma Framework' ];
 
         return $this->view('home.index', $head, $data);
@@ -31,8 +29,9 @@ class HomeController extends Controller
 //      ┌────────┐
 //      │  SHOW  │
 //      └────────┘
-    public function not_found($id)
+    public function not_found($id = "null")
     {
+
         if ( $id == 404 ){
             $head = [ 'title' => '404 | Not Found' ];
 

@@ -68,16 +68,6 @@
 					</p>
 				</a>
             </div>
-
-			<div class="p-8 text-white space-y-3 border-2 border-sunshine rounded-xl">
-                <h2 class="text-2xl font-semibold text-gray-700 capitalize dark:text-white">Country Data</h2>
-				<?php foreach ($data['countries'] as $country) { ?>
-					<div>
-						<?= $country['id'].' >' ?>
-						<span class="text-sunshine"> <?= $country['name'] ?> </span>
-					</div>
-				<?php } ?>
-            </div>
         </div>
     </div>
 </section>
