@@ -90,8 +90,13 @@ class UserController extends Controller
                     $data = ['password' => password_hash($_POST['password'], PASSWORD_DEFAULT)];
                 }
                 else {
-
+                    $this->post['password'] = false;
+                    $_SESSION['error-password'] = 'The passwords do not match';
                 }
+            }
+            else {
+                $this->post['password'] = false;
+                $_SESSION['error-password'] = 'The old password is incorrect';
             }
         }
         if (! empty($_POST['access'])){
@@ -104,12 +109,14 @@ class UserController extends Controller
             $data = ['email' => $_POST['email']];
         }
 
+        r($_POST);
+        r($data);
+        die();
+
         $this->model->update(
             'user',
             [
-                'name' => $_POST['name'],
-                'email' => $_POST['email'],
-                'access' => $_POST['access']
+                $data
             ],
             [ 'id'=>$id ]
         );
