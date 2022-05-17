@@ -15,6 +15,9 @@
     tailwind.config = {
         theme: {
             extend: {
+                fontFamily: {
+                    sans: ['Fira Code', 'sans-serif'],
+                },
                 colors: {
                     sunlight: '#f57c36',
                     sunshine: '#ee6414',
@@ -29,19 +32,60 @@
 </head>
 <body>
     <header>
-        <ul>
-            <?php if (! empty($_SESSION['auth']) ) { ?>
+		<nav class="bg-zinc-800 shadow-lg">
+			<div class="max-w-6xl mx-auto px-4">
+				<div class="flex justify-between">
+					<div class="flex space-x-7">
+						<!-- Primary Navbar items -->
+						<div class="hidden md:flex items-center space-x-1">
+							<a href="/" class="py-4 px-2 text-orange-500 border-b-4 border-orange-500 font-semibold ">Home</a>
+							<a href="/docs" class="py-4 px-2 text-gray-400 font-semibold hover:text-orange-500 transition duration-300">Documentation</a>
+						</div>
+					</div>
+					<!-- Secondary Navbar items -->
+                    <ul class="hidden md:flex items-center space-x-3">
+                        <?php if (! empty($_SESSION['auth']) ) { ?>
+                            <li><a href="/user/<?= $_SESSION['auth']['id'] ?> " class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-orange-500 hover:text-white transition duration-300">Profile</a></li>
+                            <li><a href="/disconnect" class="py-2 px-2 font-medium text-white bg-orange-500 rounded hover:bg-orange-400 transition duration-300">Disconnect</a></li>
+                        <?php } else { ?>
+                            <li><a href="/login" class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-orange-500 hover:text-white transition duration-300">Log In</a></li>
+                            <li><a href="/sign-up" class="py-2 px-2 font-medium text-white bg-orange-500 rounded hover:bg-orange-400 transition duration-300">Sign Up</a></li>
+                        <?php } ?>
+                    </ul>
+					<!-- Mobile menu button -->
+					<div class="md:hidden flex items-center">
+						<button class="outline-none mobile-menu-button">
+                            <svg class=" w-6 h-6 text-gray-500 hover:text-orange-500 "
+                                x-show="!showMenu"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+					    </button>
+					</div>
+				</ul>
+			</div>
+			<!-- mobile menu -->
+			<div class="hidden mobile-menu">
+				<ul class="">
+					<li class="/"><a href="index.html" class="block text-sm px-2 py-4 text-white bg-orange-500 font-semibold">Home</a></li>
+					<li><a href="/docs" class="block text-sm px-2 text-white py-4 hover:bg-orange-500 transition duration-300">Documentation</a></li>
+				</ul>
+			</div>
+			<script>
+				const btn = document.querySelector("button.mobile-menu-button");
+				const menu = document.querySelector(".mobile-menu");
 
-                <li><a href="/user/<?= $_SESSION['auth']['id'] ?> ">Profile</a></li>
-                <li><a href="/disconnect">Disconnect</a></li>
-
-            <?php } else { ?>
-
-                <li><a href="login">Login</a></li>
-                <li><a href="sign-up">Sign up</a></li>
-
-            <?php } ?>
-        </ul>
+				btn.addEventListener("click", () => {
+					menu.classList.toggle("hidden");
+				});
+			</script>
+		</nav>
     </header>
     <main>
         <?= $content ?>

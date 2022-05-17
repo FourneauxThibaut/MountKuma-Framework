@@ -1,4 +1,4 @@
-<section class="pt-32 flex justify-center align-center bg-gray-900 md:pl-40" style="height: 100vh;">
+<section class="pt-32 flex justify-center align-center bg-gray-900 md:pl-40" style="height: 93.8vh;">
 	<div class="mt-4 container px-6 py-10 w-10/12">
 	    <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">
 	      	Discover the <br>
