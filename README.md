@@ -32,7 +32,8 @@ You'r done !
 - [x] Basic router
 - [x] Dynamic url filled with id
 - [x] Middleware access
-- [ ] Authentication system (almost done)
+- [x] Authentication system
+- [ ] Reset password with Token
 - [ ] Template system
 - [ ] Migration system (auto creation of tables if it doesn't exist)
 - [ ] Security tests
