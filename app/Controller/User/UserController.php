@@ -87,7 +87,7 @@ class UserController extends Controller
             if (password_verify($_POST['old-password'], $user[0]['password'])) {
                 if ($_POST['password'] == $_POST['password-confirm']) {
 
-                    $data = ['password' => password_hash($_POST['password'], PASSWORD_DEFAULT)];
+                    $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
                 }
                 else {
                     $this->post['password'] = false;
@@ -99,27 +99,30 @@ class UserController extends Controller
                 $_SESSION['error-password'] = 'The old password is incorrect';
             }
         }
-        if (! empty($_POST['access'])){
-            $data = ['access' => $_POST['access']];
-        }
-        if (! empty($_POST['name'])){
-            $data = ['name' => $_POST['name']];
-        }
-        if (! empty($_POST['email'])){
-            $data = ['email' => $_POST['email']];
+        if (! empty($_POST['password']) && ! empty($_POST['password-confirm'])) {
+            if (empty($_POST['old-password'])){
+                $_SESSION['error-password'] = 'You must enter your old password for verification';
+                header('Location: /');
+            }
         }
 
-        r($_POST);
-        r($data);
-        die();
+        if (! empty($_POST['access'])){
+            $data['access'] = $_POST['access'];
+        }
+        if (! empty($_POST['username'])){
+            $data['name'] = $_POST['username'];
+        }
+        if (! empty($_POST['email'])){
+            $data['email'] = $_POST['email'];
+        }
 
         $this->model->update(
             'user',
-            [
-                $data
-            ],
+            $data,
             [ 'id'=>$id ]
         );
+
+        header('Location: /user/'.$id);
     }
 
 //      ┌──────────┐
