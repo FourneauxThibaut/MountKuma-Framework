@@ -41,6 +41,7 @@ You'r done !
 - [ ] Front end (css, js)
 
 major problems:
+- autoloader sometime don't work for any reason
 - template system never worked
 - bug found on {id} route -> example:
 ```php
