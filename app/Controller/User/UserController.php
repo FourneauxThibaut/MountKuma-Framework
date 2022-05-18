@@ -168,7 +168,9 @@ public function delete($id = "null")
         $this->sanitization();
         unset($_SESSION['error-email']);
 
-        $user = $this->model->get_user_by_username($_POST['username']);
+        if (! empty($_POST['username'])) {
+            $user = $this->model->get_user_by_username($_POST['username']);
+        }
 
         if($user) {
             if (password_verify($_POST['password'], $user[0]['password'])) {

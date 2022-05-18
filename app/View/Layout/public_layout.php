@@ -10,6 +10,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
     tailwind.config = {
@@ -30,62 +35,51 @@
     <link rel="stylesheet" href="../../../assets/css/style.css">
     <title><?= $title ?></title>
 </head>
-<body>
-    <header>
-		<nav class="bg-zinc-800 shadow-lg">
-			<div class="max-w-6xl mx-auto px-4">
-				<div class="flex justify-between">
-					<div class="flex space-x-7">
-						<!-- Primary Navbar items -->
-						<div class="hidden md:flex items-center space-x-1">
-							<a href="/" class="py-4 px-2 text-orange-500 border-b-4 border-orange-500 font-semibold ">Home</a>
-							<a href="/docs" class="py-4 px-2 text-gray-400 font-semibold hover:text-orange-500 transition duration-300">Documentation</a>
-						</div>
-					</div>
-					<!-- Secondary Navbar items -->
-                    <ul class="hidden md:flex items-center space-x-3">
-                        <?php if (! empty($_SESSION['auth']) ) { ?>
-                            <li><a href="/user/<?= $_SESSION['auth']['id'] ?> " class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-orange-500 hover:text-white transition duration-300">Profile</a></li>
-                            <li><a href="/disconnect" class="py-2 px-2 font-medium text-white bg-orange-500 rounded hover:bg-orange-400 transition duration-300">Disconnect</a></li>
-                        <?php } else { ?>
-                            <li><a href="/login" class="py-2 px-2 font-medium text-gray-500 rounded hover:bg-orange-500 hover:text-white transition duration-300">Log In</a></li>
-                            <li><a href="/sign-up" class="py-2 px-2 font-medium text-white bg-orange-500 rounded hover:bg-orange-400 transition duration-300">Sign Up</a></li>
-                        <?php } ?>
+<body class="min-h-screen bg-base-200">
+    <header class="sticky top-0">
+        <div class="pt-4 navbar bg-base-100">
+            <div class="navbar-start">
+                <div class="dropdown">
+                    <label tabindex="0" class="btn btn-ghost btn-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+                    </label>
+                    <ul tabindex="0" class="menu bg-base-100 w-56 rounded-box dropdown-content mt-3 p-2 shadow">
+                        <li><a href="/" class="bg-cyan-500 text-white">Homepage</a></li>
+                        <li><a href="/docs">Documentation</a></li>
                     </ul>
-					<!-- Mobile menu button -->
-					<div class="md:hidden flex items-center">
-						<button class="outline-none mobile-menu-button">
-                            <svg class=" w-6 h-6 text-gray-500 hover:text-orange-500 "
-                                x-show="!showMenu"
-                                fill="none"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path d="M4 6h16M4 12h16M4 18h16"></path>
-                            </svg>
-					    </button>
-					</div>
-				</ul>
-			</div>
-			<!-- mobile menu -->
-			<div class="hidden mobile-menu">
-				<ul class="">
-					<li class="/"><a href="index.html" class="block text-sm px-2 py-4 text-white bg-orange-500 font-semibold">Home</a></li>
-					<li><a href="/docs" class="block text-sm px-2 text-white py-4 hover:bg-orange-500 transition duration-300">Documentation</a></li>
-				</ul>
-			</div>
-			<script>
-				const btn = document.querySelector("button.mobile-menu-button");
-				const menu = document.querySelector(".mobile-menu");
-
-				btn.addEventListener("click", () => {
-					menu.classList.toggle("hidden");
-				});
-			</script>
-		</nav>
+                </div>
+            </div>
+            <div class="navbar-center">
+                <h1 class="text-2xl text-cyan-500">MountKuma Framework</h2>
+            </div>
+            <div class="navbar-end px-6">
+                <?php
+                    if(! empty($_SESSION['auth']) ){
+                ?>
+                <div class="dropdown dropdown-end">
+                    <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                        <div class="w-10 rounded-full">
+                        <img src="https://api.lorem.space/image/face?hash=33791" />
+                        </div>
+                    </label>
+                    <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a href="/user/<?php echo $_SESSION['auth']['id'] ?>">Profile</a></li>
+                        <li><a href="/user/<?php echo $_SESSION['auth']['id'] ?>/edit">Settings</a></li>
+                        <li><a href="/disconnect">Logout</a></li>
+                    </ul>
+                </div>
+                <?php
+                    }else{
+                ?>
+                    <ul class="flex justify-between w-48">
+                        <li><a href="/login" class="py-2 px-4">Login</a></li>
+                        <li><a href="/sign-up" class="py-2 px-4 bg-cyan-500 text-white rounded">Sign Up</a></li>
+                    </ul>
+                <?php
+                    }
+                ?>
+            </div>
+        </div>
     </header>
     <main>
         <?= $content ?>

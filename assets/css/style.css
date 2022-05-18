@@ -14,12 +14,12 @@
 
 ::-moz-selection {
   color: white;
-  background-color: #ee6414;
+  background-color: #06b6d4;
 }
 
 ::selection {
   color: white;
-  background-color: #ee6414;
+  background-color: #06b6d4;
 }
 
 h1, h2, h3, h4, h5, h6 {
