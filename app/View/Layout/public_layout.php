@@ -46,8 +46,45 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
                     </label>
                     <ul tabindex="0" class="menu bg-base-100 w-56 rounded-box dropdown-content mt-3 p-2 shadow">
-                        <li><a href="/" class="bg-cyan-500 text-white">Homepage</a></li>
-                        <li><a href="/docs">Documentation</a></li>
+
+                        <!-- homepage -->
+                        <?php
+                            if ($_SERVER['REQUEST_URI'] == "/") {
+                        ?>
+                            <li><a href="/" class="bg-cyan-500 text-white">Homepage</a></li>
+                        <?php
+                            }else{
+                        ?>
+                            <li><a href="/">Homepage</a></li>
+                        <?php
+                            }
+                        ?>
+
+                        <!-- users -->
+                        <?php
+                            if ($_SERVER['REQUEST_URI'] == "/users") {
+                        ?>
+                            <li><a href="/users" class="bg-cyan-500 text-white">Users</a></li>
+                        <?php
+                            }else{
+                        ?>
+                            <li><a href="/users">Users</a></li>
+                        <?php
+                            }   
+                        ?>
+
+                        <!-- documentation -->
+                        <?php
+                            if ($_SERVER['REQUEST_URI'] == "/docs") {
+                        ?>
+                            <li><a href="/docs" class="bg-cyan-500 text-white">Documentation</a></li>
+                        <?php
+                            }else{
+                        ?>
+                            <li><a href="/docs">Documentation</a></li>
+                        <?php
+                            }
+                        ?>
                     </ul>
                 </div>
             </div>

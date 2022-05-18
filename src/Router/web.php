@@ -11,6 +11,7 @@ $route->add('/', 'HomeController@index');
 $route->add('/login', 'UserController@login');
 $route->add('/connect', 'UserController@connect');
 $route->add('/sign-up', 'UserController@sign_up');
+$route->add('/users', 'UserController@list');
 $route->add('/user/{id}', 'UserController@profile');
 $route->add('/user/{id}/edit', 'UserController@edit');
 $route->add('/user/{id}/update', 'UserController@update');

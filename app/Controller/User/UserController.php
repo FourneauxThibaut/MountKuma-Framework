@@ -15,6 +15,25 @@ class UserController extends Controller
         $this->model = new UserModel($this->controller);
     }
 
+//      ┌────────┐
+//      │  LIST  │
+//      └────────┘
+    public function list()
+    {
+        $user = $this->model->get('*', 'user');
+
+        if (! empty($user)) {
+            $data = [
+                'users' => $user,
+            ];
+    
+            $head = [ 'title' => 'list of users' ];
+    
+            return $this->view('user.user_list', $head, $data);
+        }
+    }
+        
+
 //      ┌───────────┐
 //      │  PROFILE  │
 //      └───────────┘

@@ -1,3 +1,11 @@
+<div class="mx-10 my-4 text-sm breadcrumbs">
+    <ul>
+        <li><a href="/">Home</a></li> 
+        <li><a href="/users">Users</a></li> 
+        <li class="text-cyan-500">Profile</li>
+    </ul>
+</div>
+
 <div class="w-full lg:w-4/12 px-4 mx-auto mt-32">
     <div class="px-6">
         <div class="mt-10">
@@ -62,6 +70,9 @@
                         </td>
                     </tr>
                 </table>
+                <div class="w-full text-right mt-2">
+                    <a href="/user/<?= $data['user']['id'] ?>/edit">Edit</a>
+                </div>
             </div>
         </div>
     </div>

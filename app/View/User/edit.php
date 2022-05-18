@@ -1,3 +1,12 @@
+<div class="mx-10 my-4 text-sm breadcrumbs">
+    <ul>
+        <li><a href="/">Home</a></li> 
+        <li><a href="/users">Users</a></li> 
+        <li><a href="/user/<?= $data['user']['id'] ?>">Profile</a></li>
+        <li class="text-cyan-500">Edit</li>
+    </ul>
+</div>
+
 <form action="/user/<?= $data['user']['id'] ?>/update" method="post" enctype="multipart/form-data">
     <div class="w-full lg:w-4/12 px-4 mx-auto">
         <div class="px-6">
