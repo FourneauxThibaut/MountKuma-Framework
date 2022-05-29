@@ -1,6 +1,6 @@
 <?php
 
-require($_SERVER['DOCUMENT_ROOT'] . '/app/Database/Migration.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/app/Database/Migration.php');
 
 Class UserMigration extends Migration
 {
@@ -17,8 +17,10 @@ Class UserMigration extends Migration
             name VARCHAR(255) NOT NULL UNIQUE,
             email VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
+            reset_token VARCHAR(255) NULL,
             access VARCHAR(255) NOT NULL DEFAULT 'guest',
-            creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            reset_date TIMESTAMP NULL
         )";
     }
 }

@@ -23,9 +23,9 @@ class Controller
 
         ob_start();
 
-        require($_SERVER['DOCUMENT_ROOT'] . '/app/View/' . $path . '.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/app/View/' . $path . '.php');
         $content = ob_get_clean();
         
-        require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Layout/public_layout.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/app/View/Layout/public_layout.php');
     }
 }

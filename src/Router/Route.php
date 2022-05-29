@@ -2,9 +2,13 @@
 
 namespace Src\Router;
 
+use UserModel;
+use Database\Database;
+
 class Route {
 
     // how to turn it private?
+    public $db;
     public $path;
     public $callable;
     public $folder;
@@ -15,6 +19,9 @@ class Route {
 //      │  CONSTRUCT  │
 //      └─────────────┘
     public function __construct($path, $callable, $id = null){
+        
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/app/Database/Database.php');
+        $this->db = Database::connect();
 
         // $this->path = trim($path);
         $this->path = $path;
@@ -30,13 +37,13 @@ class Route {
 //      │  MIDDLEWARE  │
 //      └──────────────┘
 public function middleware(object $route){
-
+    $is_admin = $this->is_admin();
+    
     switch ($route->middleware) {
         case 'admin':
-            if (! empty($_SESSION['auth'])){
-                if ($_SESSION['auth']['access'] == 'admin'){
-                    return true;
-                }
+            
+            if ($is_admin == true){
+                return true;
             }
             return false;     
             break;
@@ -46,7 +53,9 @@ public function middleware(object $route){
                 if ($_SESSION['auth']['id'] == $route->id){
                     return true;
                 }
-                if ($_SESSION['auth']['access'] == 'admin'){
+
+                $is_admin = $this->is_admin();
+                if ($is_admin == true){
                     return true;
                 }
             }
@@ -72,8 +81,8 @@ public function middleware(object $route){
         $method = $controller[1];
         $model = $this->folder.'Model';
 
-        require ($_SERVER['DOCUMENT_ROOT'].'/app/Controller/'.$this->folder.'/'.$file.'.php');
-        require ($_SERVER['DOCUMENT_ROOT'].'/app/Model/'.$this->folder.'/'.$model.'.php');
+        require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Controller/'.$this->folder.'/'.$file.'.php');
+        require_once ($_SERVER['DOCUMENT_ROOT'].'/app/Model/'.$this->folder.'/'.$model.'.php');
         
         $name = $file.'::'.$method;
         $name = new $file();
@@ -83,6 +92,34 @@ public function middleware(object $route){
         }
         else{
             $name->$method();
+        }
+    }
+
+    public function is_admin(){
+        if ( ! empty($_GET['token'])) {
+            $token = $_GET['token'];
+            $access = $this->db->select(
+                'SELECT access FROM user WHERE reset_token = ?', [$token]
+            );
+            if ( ! empty($access)) {
+                if ($access[0]['access'] == 'admin') {
+                    return true;
+                }                
+            }
+        }
+        if (! empty($_SESSION['auth'])) {
+            $access = $this->db->select(
+                'SELECT access FROM user WHERE id = ?', [$_SESSION['auth']['id']]
+            );
+            if ($access[0]['access'] == 'admin'){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
         }
     }
 }

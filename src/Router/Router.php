@@ -224,7 +224,7 @@ class Router
                             break;
                         }
                         else{
-                            require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Error/not_access.php');
+                            require_once($_SERVER['DOCUMENT_ROOT'] . '/app/View/Error/not_access.php');
                             $this->redirected = true;
                             break;
                         }
@@ -235,7 +235,7 @@ class Router
             }
         }
         if ( $this->redirected != true ){
-            require($_SERVER['DOCUMENT_ROOT'] . '/app/View/Error/404.php');
+            require_once($_SERVER['DOCUMENT_ROOT'] . '/app/View/Error/404.php');
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-require($_SERVER['DOCUMENT_ROOT'] . '/src/Utility/Controller.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/src/Utility/Controller.php');
 
 class HomeController extends Controller
 {

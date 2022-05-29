@@ -6,7 +6,7 @@ $tables = [
 
 foreach ($tables as $key => $table) {
     
-    require($_SERVER['DOCUMENT_ROOT'] . '/app/Database/' . $table);
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/app/Database/' . $table);
     $migration = new $key();
 }
 die();

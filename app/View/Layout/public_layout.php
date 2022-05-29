@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div class="navbar-center">
-                <h1 class="text-2xl text-cyan-500">MountKuma Framework</h2>
+                <p class="text-2xl text-cyan-500">MountKuma Framework</p>
             </div>
             <div class="navbar-end px-6">
                 <?php
@@ -98,7 +98,7 @@
                 <div class="dropdown dropdown-end">
                     <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                         <div class="w-10 rounded-full">
-                        <img src="https://api.lorem.space/image/face?hash=33791" />
+                            <img src="https://api.lorem.space/image/face?hash=33791" />
                         </div>
                     </label>
                     <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">

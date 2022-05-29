@@ -40,14 +40,6 @@
                     <!-- row 3 -->
                     <tr>
                         <td>
-                            Email Address
-                        </td>
-                        <td>
-                            <?= $data['user']['email'] ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
                             Role
                         </td>
                         <td>

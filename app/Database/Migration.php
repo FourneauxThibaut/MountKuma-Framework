@@ -11,7 +11,7 @@ Class Migration
 //      └─────────────┘
     public function __construct()
     {
-        require($_SERVER['DOCUMENT_ROOT'] . '/app/Database/Database.php');
+        require_once($_SERVER['DOCUMENT_ROOT'] . '/app/Database/Database.php');
         $this->db = Database::connect();
     }
 
