@@ -33,7 +33,7 @@ You'r done !
 - [x] Dynamic url filled with id
 - [x] Middleware access
 - [x] Authentication system
-- [ ] Reset password with Token
+- [x] Reset password with Token
 - [ ] Template system
 - [ ] Migration system (auto creation of tables if it doesn't exist)
 - [ ] Security tests
