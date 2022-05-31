@@ -26,6 +26,17 @@ class HomeController extends Controller
         return $this->view('home.index', $head, $data);
     }
 
+//      ┌─────────────────┐
+//      │  DOCUMENTATION  │
+//      └─────────────────┘
+    public function documentation()
+    {
+        $data = [];
+        $head = [ 'title' => 'Documentation' ];
+
+        return $this->view('home.documentation', $head, $data);
+    }
+
 //      ┌────────┐
 //      │  SHOW  │
 //      └────────┘

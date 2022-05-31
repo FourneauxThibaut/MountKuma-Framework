@@ -7,6 +7,13 @@ $route = new Router($_SERVER['REQUEST_URI']);
 $route->add('/error-{id}', 'HomeController@not_found');
 $route->add('/', 'HomeController@index');
 
+// DocsController
+$route->add('/docs', 'DocsController@index');
+$route->add('/docs/get-started', 'DocsController@install');
+$route->add('/docs/utility', 'DocsController@utility');
+$route->add('/docs/controller', 'DocsController@controller');
+$route->add('/docs/model', 'DocsController@model');
+
 // UserController
 $route->add('/login', 'UserController@login');
 $route->add('/connect', 'UserController@connect');
