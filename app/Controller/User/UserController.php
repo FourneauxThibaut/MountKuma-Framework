@@ -193,7 +193,7 @@ public function delete($id = "null")
             $user = $this->model->get_user_by_username($_POST['username']);
         }
 
-        if($user) {
+        if(! empty($user)) {
             if (password_verify($_POST['password'], $user[0]['password'])) {
                 
                 $this->connect_user($_POST['username']);

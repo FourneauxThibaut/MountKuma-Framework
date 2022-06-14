@@ -13,6 +13,8 @@ $route->add('/docs/get-started', 'DocsController@install');
 $route->add('/docs/utility', 'DocsController@utility');
 $route->add('/docs/controller', 'DocsController@controller');
 $route->add('/docs/model', 'DocsController@model');
+$route->add('/todo', 'DocsController@todo');
+$route->add('/contact', 'DocsController@contact');
 
 // UserController
 $route->add('/login', 'UserController@login');
@@ -29,7 +31,7 @@ $route->add('/user/{id}/update', 'UserController@update');
 $route->add('/user/{id}/delete', 'UserController@delete');
 $route->add('/user/create', 'UserController@register');
 $route->add('/disconnect', 'UserController@disconnect');
-$route->add_middleware('UserController',['edit', 'update', 'delete'], 'auth');
+$route->add_middleware('UserController', 'auth', ['edit', 'update', 'delete']);
 
 // $route->print_all_routes();
 $route->load();

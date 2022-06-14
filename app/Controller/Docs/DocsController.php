@@ -69,4 +69,34 @@ class DocsController extends Controller
 
         return $this->view('docs.model', $head, $data);
     }
+
+//      ┌────────┐
+//      │  TODO  │
+//      └────────┘
+    public function todo()
+    {
+        $data = [];
+        $head = [ 'title' => 'Mount-Kuma Framework' ];
+
+        return $this->view('docs.todo', $head, $data);
+    }
+
+//      ┌───────────┐
+//      │  CONTACT  │
+//      └───────────┘
+    public function contact()
+    {
+        $data = [];
+        $head = [ 'title' => 'Mount-Kuma Framework' ];
+
+        return $this->view('docs.contact', $head, $data);
+    }
+
+//      ┌─────────────┐
+//      │  SEND MAIL  │
+//      └─────────────┘
+    public function send_mail()
+    {
+        
+    }
 }

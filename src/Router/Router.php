@@ -134,12 +134,23 @@ class Router
  * @param array args array of methods to add middleware to
  * @param string access the middleware name
  */
-    public function add_middleware(string $controller,array $args,string $access)
+    public function add_middleware(string $controller, string $access, array $args, array $except = [])
     {
-
+        if ($args == ['*']){
+            $args = array_keys($this->routes[$controller]);
+        }
+        if (! empty($except)){
+            foreach ($except as $value) {
+                foreach ($args as $index => $arg) {
+                    if ($arg == $value){
+                        unset($args[$index]);
+                    }
+                }
+            }
+        }
         foreach ($this->routes as $route_controller) {
             foreach ($route_controller as $method => $route) {
-
+                
                 foreach ($args as $arg) {
                     if( $method == $arg ){
 
